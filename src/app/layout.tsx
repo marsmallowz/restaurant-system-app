@@ -24,6 +24,9 @@ export default function RootLayout({
             <div className="flex flex-col space-y-4 bg-slate-100 py-5 px-1.5 sm:px-5 rounded-md">
               {children}
             </div>
+            <div className="text-center text-sm text-gray-500">
+              Semua data hanya disimpan di Local Storage browser Anda
+            </div>
           </div>
         </main>
       </body>
