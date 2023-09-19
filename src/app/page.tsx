@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { MdModeEdit, MdDelete } from "react-icons/md";
+import { generateCustomId } from "./utils/customIdGenerator";
 
 interface MenuItem {
-  id: number;
+  id: string;
   name: string;
 }
 
@@ -17,32 +18,27 @@ export default function Home() {
   const [modeDelete, setModeDelete] = useState<Mode>("DEFAULT");
 
   useEffect(() => {
-    let getMenu = localStorage.getItem("menu") || undefined;
+    let getMenu = localStorage.getItem("menus") || undefined;
     if (getMenu) {
       const parsedMenu = JSON.parse(getMenu);
       setMenu(parsedMenu);
     } else {
       const dataObj = [
-        { id: 2001, name: "Ayam Bakar Rica-rica" },
-        { id: 2000, name: "Ayam Bakar Taliwang" },
-        { id: 1999, name: "Ayam Bakar Madu" },
+        { id: generateCustomId(), name: "Ayam Bakar Rica-rica" },
+        { id: generateCustomId(), name: "Ayam Bakar Taliwang" },
+        { id: generateCustomId(), name: "Ayam Bakar Madu" },
       ];
       const jsonData = JSON.stringify(dataObj);
-      localStorage.setItem("menu", jsonData);
+      localStorage.setItem("menus", jsonData);
       setMenu(dataObj);
     }
   }, []);
 
   const handleAddMenu = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    let generateId: number;
-    if (menu.length) {
-      generateId = menu[0]["id"] + 1;
-    } else {
-      generateId = 1;
-    }
+    let generateId: string = generateCustomId();
     const jsonData = JSON.stringify([{ id: generateId, name: input }, ...menu]);
-    localStorage.setItem("menu", jsonData);
+    localStorage.setItem("menus", jsonData);
     setMenu([{ id: generateId, name: input }, ...menu]);
     setInput("");
   };
@@ -51,12 +47,12 @@ export default function Home() {
     event.preventDefault();
     const updatedMenu = menu.map((item) => {
       if (item.id === selectedMenu?.id) {
-        return { ...item, name: selectedMenu.name }; // Memperbarui nama sesuai dengan ID
+        return { ...item, name: selectedMenu.name };
       }
       return item;
     });
     const jsonData = JSON.stringify(updatedMenu);
-    localStorage.setItem("menu", jsonData);
+    localStorage.setItem("menus", jsonData);
     setMenu(updatedMenu);
     setModeDelete("DEFAULT");
     setSelectedMenu(undefined);
