@@ -3,6 +3,7 @@
 import BoxTable from "@/components/BoxTable";
 import React, { useEffect, useState } from "react";
 import { generateCustomId } from "../utils/customIdGenerator";
+import PopUpOrder from "@/components/PopUpOrder";
 
 interface MenuItem {
   id: string;
@@ -19,6 +20,8 @@ interface OrderItem {
 export default function Order() {
   const [menus, setMenus] = useState<MenuItem[]>([]);
   const [orders, setOrder] = useState<OrderItem[]>([]);
+
+  const [showPopUp, setShowPopUp] = useState<boolean>(false);
 
   const [selectedTable, setSelectedTable] = useState<number>(0);
   const [selectedMenu, setSelectedMenu] = useState<MenuItem>();
@@ -101,18 +104,19 @@ export default function Order() {
       else {
         const generateId = generateCustomId();
         const newOrders = [
+          ...orders,
           {
             id: generateId,
             tableId: selectedTable,
             menus: [{ menu: selectedMenu!, quantity }],
             isCompleted: false,
           },
-          ...orders,
         ];
         const jsonData = JSON.stringify(newOrders);
         localStorage.setItem("orders", jsonData);
         setOrder(newOrders);
       }
+      setShowPopUp(true);
     }
   };
 
@@ -148,13 +152,15 @@ export default function Order() {
 
   return (
     <div className="flex flex-col gap-1">
-      <button className="w-3/12 mb-4 text-white py-1.5 px-4 bg-gray-400 hover:bg-gray-500 rounded-md">
+      {/* <button className="w-3/12 mb-4 text-white py-1.5 px-4 bg-gray-400 hover:bg-gray-500 rounded-md">
         Add Table
-      </button>
-      {selectedTable ? null : (
+      </button> */}
+      {selectedTable ? (
+        <div className="text-gray-500">*Please select a table.</div>
+      ) : (
         <div className="text-red-500">*Please select a table.</div>
       )}
-      <div className="grid grid-cols-3 rounded-md bg-white border overflow-hidden ">
+      <div className="grid grid-cols-3 rounded-md bg-white border-2 overflow-hidden ">
         {listTable.map((box) => (
           <BoxTable
             key={box.id}
@@ -212,6 +218,11 @@ export default function Order() {
           Submit
         </button>
       </form>
+      <PopUpOrder
+        visible={showPopUp}
+        setVisible={setShowPopUp}
+        message="Menu successfully added to order."
+      />
     </div>
   );
 }
