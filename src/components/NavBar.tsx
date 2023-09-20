@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GrPowerCycle } from "react-icons/gr";
+import ResetButton from "./ResetButton";
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -38,15 +38,7 @@ export default function NavBar() {
             );
           })}
         </div>
-        <button
-          onClick={() => {
-            localStorage.setItem("favoriteNumber", "251509");
-          }}
-          className="flex gap-1.5 items-center py-2 px-6 rounded-md border bg-white"
-        >
-          <GrPowerCycle />
-          <div className="text-sm">Reset</div>
-        </button>
+        <ResetButton />
       </div>
     </>
   );
