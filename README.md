@@ -1,6 +1,6 @@
 ## Live Demo
 
-https://vercel.com/marsmallowz/tukar-menukar-app
+https://restaurant-system-app.vercel.app/
 
 ##
 
