@@ -1,18 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
-interface MenuItem {
-  id: string;
-  name: string;
-}
-
-interface OrderItem {
-  id: string;
-  tableId: number;
-  isCompleted: boolean;
-  menus: { menu: MenuItem; quantity: number }[];
-}
+import { OrderItem } from "@/interfaces/OrderItem";
 
 export default function Kitchen() {
   const [orders, setOrder] = useState<OrderItem[]>([]);
@@ -44,8 +33,8 @@ export default function Kitchen() {
                 <div className="text-xl font-medium">Table {order.tableId}</div>
                 {order.menus.map((menu) => {
                   return (
-                    <div key={menu.menu.id} className="">
-                      {menu.quantity}x {menu.menu.name}
+                    <div key={menu.id} className="">
+                      {menu.quantity}x {menu.name}
                     </div>
                   );
                 })}

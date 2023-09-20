@@ -4,18 +4,8 @@ import BoxTable from "@/components/BoxTable";
 import React, { useEffect, useState } from "react";
 import { generateCustomId } from "../utils/customIdGenerator";
 import PopUpOrder from "@/components/PopUpOrder";
-
-interface MenuItem {
-  id: string;
-  name: string;
-}
-
-interface OrderItem {
-  id: string;
-  tableId: number;
-  isCompleted: boolean;
-  menus: { menu: MenuItem; quantity: number }[];
-}
+import { MenuItem } from "@/interfaces/MenuItem";
+import { OrderItem } from "@/interfaces/OrderItem";
 
 export default function Order() {
   const [menus, setMenus] = useState<MenuItem[]>([]);
@@ -50,15 +40,14 @@ export default function Order() {
 
   const handleAddOrder = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (selectedTable) {
+    if (selectedTable && selectedMenu) {
       const currentOrder = orders.find(
-        (order) =>
-          order.tableId === selectedTable && order.isCompleted === false
+        (order) => order.tableId === selectedTable
       );
       // Jika ada order dengan meja yang sama tetapi belum complete
       if (currentOrder) {
         const currentMenu = currentOrder.menus.find(
-          (menu) => menu.menu.id === selectedMenu?.id
+          (menu) => menu.id === selectedMenu.id
         );
         // jika menu yang mau ditambahkan sudah ada di order.
         if (currentMenu) {
@@ -66,7 +55,7 @@ export default function Order() {
           const newOrders = orders.map((order) => {
             if (order.id === currentOrder.id) {
               const newMenus = order.menus.map((menu) => {
-                if (menu.menu.id === currentMenu.menu.id) {
+                if (menu.id === currentMenu.id) {
                   return { ...menu, quantity: totalQuantity };
                 }
                 return menu;
@@ -89,7 +78,10 @@ export default function Order() {
             if (order.id === currentOrder.id) {
               return {
                 ...order,
-                menus: [{ menu: selectedMenu!, quantity }, ...order.menus],
+                menus: [
+                  { id: selectedMenu.id, name: selectedMenu.name, quantity },
+                  ...order.menus,
+                ],
               };
             }
             return order;
@@ -108,8 +100,7 @@ export default function Order() {
           {
             id: generateId,
             tableId: selectedTable,
-            menus: [{ menu: selectedMenu!, quantity }],
-            isCompleted: false,
+            menus: [{ id: selectedMenu.id, name: selectedMenu.name, quantity }],
           },
         ];
         const jsonData = JSON.stringify(newOrders);

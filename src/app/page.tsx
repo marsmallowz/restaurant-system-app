@@ -3,13 +3,8 @@
 import { useEffect, useState } from "react";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import { generateCustomId } from "./utils/customIdGenerator";
-
-interface MenuItem {
-  id: string;
-  name: string;
-}
-
-type Mode = "EDIT" | "DELETE" | "DEFAULT";
+import { MenuItem } from "@/interfaces/MenuItem";
+import { Mode } from "@/types/Mode";
 
 export default function Home() {
   const [menu, setMenu] = useState<MenuItem[]>([]);

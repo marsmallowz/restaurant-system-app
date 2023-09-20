@@ -1,19 +1,8 @@
 "use client";
 
-import PopUpOrder from "@/components/PopUpOrder";
 import React, { useEffect, useState } from "react";
-
-interface MenuItem {
-  id: string;
-  name: string;
-}
-
-interface OrderItem {
-  id: string;
-  tableId: number;
-  isCompleted: boolean;
-  menus: { menu: MenuItem; quantity: number }[];
-}
+import PopUpOrder from "@/components/PopUpOrder";
+import { OrderItem } from "@/interfaces/OrderItem";
 
 export default function Cashier() {
   const [orders, setOrders] = useState<OrderItem[]>([]);
@@ -48,7 +37,7 @@ export default function Cashier() {
 
   return (
     <div className="flex flex-col gap-2">
-      <div>Table</div>
+      <div className="font-medium">Table</div>
       <div className="flex justify-between">
         <div className="flex w-7/12 gap-2">
           <select
@@ -109,8 +98,8 @@ export default function Cashier() {
               {selectedOrder &&
                 selectedOrder.menus.map((menu) => {
                   return (
-                    <tr key={menu.menu.id} className="border-b">
-                      <td className="h-12">{menu.menu.name}</td>
+                    <tr key={menu.id} className="border-b">
+                      <td className="h-12">{menu.name}</td>
                       <td className="text-right">{menu.quantity}</td>
                       <td className="text-center">Free</td>
                     </tr>
