@@ -1,6 +1,6 @@
 import React from "react";
 
-import { generateCustomId } from "@/app/utils/customIdGenerator";
+import { generateCustomId } from "@/utils/customIdGenerator";
 import { GrPowerCycle } from "react-icons/gr";
 
 export default function ResetButton() {

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MdModeEdit, MdDelete } from "react-icons/md";
-import { generateCustomId } from "./utils/customIdGenerator";
+import { generateCustomId } from "../utils/customIdGenerator";
 import { MenuItem } from "@/interfaces/MenuItem";
 import { Mode } from "@/types/Mode";
 

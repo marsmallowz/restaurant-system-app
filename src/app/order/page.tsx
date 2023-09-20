@@ -2,7 +2,7 @@
 
 import BoxTable from "@/components/BoxTable";
 import React, { useEffect, useState } from "react";
-import { generateCustomId } from "../utils/customIdGenerator";
+import { generateCustomId } from "../../utils/customIdGenerator";
 import PopUpOrder from "@/components/PopUpOrder";
 import { MenuItem } from "@/interfaces/MenuItem";
 import { OrderItem } from "@/interfaces/OrderItem";
