@@ -143,9 +143,6 @@ export default function Order() {
 
   return (
     <div className="flex flex-col gap-1">
-      {/* <button className="w-3/12 mb-4 text-white py-1.5 px-4 bg-gray-400 hover:bg-gray-500 rounded-md">
-        Add Table
-      </button> */}
       {selectedTable ? (
         <div className="text-gray-500">*Please select a table.</div>
       ) : (
